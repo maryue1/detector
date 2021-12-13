@@ -10,28 +10,36 @@
             <textarea v-model="message" placeholder="add multiple lines" rows="15" cols="80"></textarea>
         </span>
         <br>
-        <button class="popup-open">Check</button>
-        <Popup v-if="popupTriggers.buttonTrigger">
-          <h2>Results</h2>
-        </Popup>
+        <button v-on:click="handleCheck">Check</button>
     </div>
 </div>
 </main>
 </template>
 
 <script>
-import {ref } from 'vue';
-import Popup from './components/Popup.vue'
+
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
+
+
 
 export default {
-  setup () {
-    const popupTriggers = ref({
-      buttonTrigger: false
-    });
-    return {
-      Popup,
-      popupTriggers
+  methods: {
+    handleCheck () {
+      Swal.fire({
+  title: 'RESULTS',
+  html: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+  <p style="color:green;font-size:30px;"><strong>TRUE</strong></p>
+  <p style="color:red;font-size:30px;"><strong>FALSE</strong></p>`,
+  width: 1000,
+  padding: '3em',
+  color: '#ffffff',
+  background:  '#2e2e2e',
+  confirmButtonColor: "#1beabd"
+})
     }
+    
   }
 }
 </script>
@@ -48,6 +56,7 @@ body {
     width: 100%;
     min-height: 100vh;
     overflow: auto;
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif; 
 }
 
 #app {
@@ -116,7 +125,7 @@ button {
     padding-left: 20px;
     min-width: 160px;
     height: 62px;
-    background-color: transparent;
+    background-color: #1beabd;
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
