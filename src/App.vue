@@ -1,19 +1,19 @@
 <template>
-<main>
-<div class="page-container">
-    <div class="input-container">
-        <h1 data-highlightword="FAKE ">NEWS DETECTOR</h1>
-        <span>Insert news to check:</span>
-        <br>
-        <br>
-        <span class="textarea">
-            <textarea v-model="message" placeholder="add multiple lines" rows="15" cols="80"></textarea>
-        </span>
-        <br>
-        <button v-on:click="handleCheck">Check</button>
+  <main>
+    <div class="page-container">
+        <div class="input-container">
+            <h1 data-highlightword="FAKE ">NEWS DETECTOR</h1>
+            <span>Insert news to check:</span>
+            <br>
+            <br>
+            <span class="textarea">
+                <textarea v-model="message" placeholder="add multiple lines" rows="15" cols="80"></textarea>
+            </span>
+            <br>
+            <button v-on:click="handleCheck">Check</button>
+        </div>
     </div>
-</div>
-</main>
+  </main>
 </template>
 
 <script>
