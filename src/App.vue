@@ -10,7 +10,7 @@
                 <textarea v-model="message" placeholder="add multiple lines" rows="15" cols="80"></textarea>
             </span>
             <br>
-            <button v-on:click="handleCheck">Check</button>
+            <button v-on:click="checkText">Check</button>
         </div>
     </div>
   </main>
@@ -22,24 +22,40 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import 'sweetalert2/src/sweetalert2.scss'
 
-
+import axios from 'axios'
 
 export default {
   methods: {
-    handleCheck () {
+    checkText () {
+      var bodyFormData = new FormData();
+      bodyFormData.append('text', this.message);
+
+      axios({
+        method: "post",
+        url: "https://ccsfakeapi.azurewebsites.net/check",
+        data: bodyFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(response => {
+        this.handleCheck(response.data)
+      })
+    },
+    handleCheck (data) {
+      let popupContent;
+      if(data.response == 'Fake') {
+        popupContent = '<p>' + this.message + '</p>' + '<p style="color:red;font-size:30px;"><strong>FALSE</strong></p>';
+      } else {
+        popupContent = '<p>' + this.message + '</p>' + '<p style="color:green;font-size:30px;"><strong>TRUE</strong></p>';
+      }
       Swal.fire({
-  title: 'RESULTS',
-  html: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-  <p style="color:green;font-size:30px;"><strong>TRUE</strong></p>
-  <p style="color:red;font-size:30px;"><strong>FALSE</strong></p>`,
-  width: 1000,
-  padding: '3em',
-  color: '#ffffff',
-  background:  '#2e2e2e',
-  confirmButtonColor: "#1beabd"
-})
+        title: 'RESULTS',
+        html: popupContent,
+        width: 1000,
+        padding: '3em',
+        color: '#ffffff',
+        background:  '#2e2e2e',
+        confirmButtonColor: "#1beabd"
+      })
     }
-    
   }
 }
 </script>
